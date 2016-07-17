@@ -2,20 +2,42 @@ import random
 
 
 class Prisoner(object):
-    def __init__(self, index, cooperation, life=100):
-        # 0:silence 1:betray
+    type_table = {"silence": 0,
+                  "betray": 1,
+                  "flexible": 2,
+                  "revenge": 3,}
+
+    def __init__(self, index, tactics, life=100):
         self.index = index
-        self.cooperation = cooperation
+        self.tactics = tactics
         self.life = life
+        self.cooperation = None
+        self.history = [0, 0, 0]
+        self.betray_list = []
 
     def __str__(self):
-        return "index:%d, cooperation:%s, life:%d" % (self.index, 'betay' if self.cooperation == 1 else 'silence', self.life)
+        return ("index:%d, type:%s, cooperation:%s, life:%d" %
+                (self.index, self.type, 'betay' if self.cooperation == 1 else 'silence', self.life))
+
+    def get_cooperation(self, another):
+        if self.tactics == "flexible":
+            self.cooperation = reduce(lambda x,y: x + y, self.history) / 2
+            self.history.pop(0)
+            self.history.append(another.cooperation)
+        elif self.tactics == "revenge":
+            self.cooperation = 1 if another in self.betray_list else 0
+        else:
+            self.cooperation = Prisoner.type_table[self.tactics]
+
+
 
     def test(self, another):
+        # 0:silence 1:betray
         table = {00: (8, 8),
                  01: (10,  -10),
                  10: (-10, 10),
                  11: (-8, -8)}
+        self.get_cooperation(another)
         test_result = table[self.cooperation * 10 + another.cooperation]
         self.life += test_result[0]
         another.life += test_result[1]
