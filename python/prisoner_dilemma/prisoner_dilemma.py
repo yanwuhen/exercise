@@ -7,12 +7,12 @@ class Prisoner(object):
         self.index = index
         self.tactics = tactics
         self.life = life
-        self.history = [0, 0, 0]
+        self.history = [1, 1, 1]
         self.betray_list = []
         if tactics in (0, 1):
             self.cooperation = tactics
         else:
-            self.cooperation = 0
+            self.cooperation = 1
 
     def __str__(self):
         type_table = {0: "silence",
@@ -75,7 +75,7 @@ def start(test_list):
     return filter(Prisoner.is_alive, test_list)
 
 if __name__ == '__main__':
-    sum_prisoner = 100
+    sum_prisoner = 10000
     test_count = 100
     prisoner_list = []
     dead_list = []
@@ -86,8 +86,15 @@ if __name__ == '__main__':
         print i
         #for p in prisoner_list:
         #    print p
+
+        silence_count  = len(filter(lambda x: x.tactics == 0, prisoner_list))
+        betray_count   = len(filter(lambda x: x.tactics == 1, prisoner_list))
+        flexible_count = len(filter(lambda x: x.tactics == 2, prisoner_list))
+        revenge_count  = len(filter(lambda x: x.tactics == 3, prisoner_list))
         print "sum:"
-        print "silence count:",   len(filter(lambda x: x.tactics == 0, prisoner_list))
-        print "betray count:",    len(filter(lambda x: x.tactics == 1, prisoner_list))
-        print "flexible count:",  len(filter(lambda x: x.tactics == 2, prisoner_list))
-        print "revenge count:",   len(filter(lambda x: x.tactics == 3, prisoner_list))
+        print "silence count:",  silence_count
+        print "betray count:",   betray_count
+        print "flexible count:", flexible_count
+        print "revenge count:",  revenge_count
+        if betray_count == 0:
+            break
