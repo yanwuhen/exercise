@@ -92,18 +92,28 @@ def start(test_list):
         Prisoner.test(test_list[one], test_list[another])
     return filter(Prisoner.is_alive, test_list)
 
+
 def get_random_tactics(proportion):
     rand = random.randint(1, 100)
     for i, v in enumerate(proportion):
-        if rand <= v:
+        if rand > v:
             continue
         return i
     return i
 
 if __name__ == '__main__':
-    sum_prisoner = 100
-    test_count = 100
-    proportion = [50, 100]
+    TEST = True
+    def test_random():
+        for i in range(100):
+            #print get_random_tactics([50, 100])
+            #print get_random_tactics([33, 66, 100])
+            print get_random_tactics([25, 50, 75, 100])
+    if TEST:
+        test_random()
+        exit()
+    sum_prisoner = 10000
+    test_count = 10000
+    proportion = [33, 66, 100]
     prisoner_list = []
     dead_list = []
     for i in range(sum_prisoner):
