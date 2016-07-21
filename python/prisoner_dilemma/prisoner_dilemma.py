@@ -38,7 +38,6 @@ class Prisoner(object):
             new_cooperation = self.tactics
         return new_cooperation
 
-
     @staticmethod
     def test(one, another):
         one_new_coop = one.get_new_cooperation(another)
@@ -74,18 +73,27 @@ def start(test_list):
         Prisoner.test(test_list[one], test_list[another])
     return filter(Prisoner.is_alive, test_list)
 
+def get_random_tactics(proportion):
+    rand = random.randint(1, 100)
+    for i, v in enumerate(proportion):
+        if rand <= v:
+            continue
+        return i
+    return i
+
 if __name__ == '__main__':
-    sum_prisoner = 10000
+    sum_prisoner = 100
     test_count = 100
+    proportion = [1, 100]
     prisoner_list = []
     dead_list = []
     for i in range(sum_prisoner):
-        prisoner_list.append(Prisoner(i, random.choice(range(4))))
+        prisoner_list.append(Prisoner(i, get_random_tactics(proportion)))
     for i in range(test_count):
         prisoner_list = start(prisoner_list)
         print i
-        #for p in prisoner_list:
-        #    print p
+        for p in prisoner_list:
+            print p
 
         silence_count  = len(filter(lambda x: x.tactics == 0, prisoner_list))
         betray_count   = len(filter(lambda x: x.tactics == 1, prisoner_list))
