@@ -1,4 +1,21 @@
 import random
+from functools import wraps
+
+
+def print_specific(one, two, type):
+    if one.tactics == type or two.tactics == type:
+        print one
+        print two
+
+
+def print_prisoner(fun):
+    def wrapper(one, another):
+        print_specific(one, another, 1)
+        result = fun(one, another)
+        print_specific(one, another, 1)
+        print "======"
+        return result
+    return wrapper
 
 
 class Prisoner(object):
@@ -38,6 +55,8 @@ class Prisoner(object):
             new_cooperation = self.tactics
         return new_cooperation
 
+
+
     @staticmethod
     def test(one, another):
         one_new_coop = one.get_new_cooperation(another)
@@ -46,8 +65,8 @@ class Prisoner(object):
         another.cooperation = another_new_coop
         # 0:silence 1:betray
         table = {00: (8, 8),
-                 01: (10,  -10),
-                 10: (-10, 10),
+                 01: (-10,  10),
+                 10: (10, -10),
                  11: (-8, -8)}
         test_result = table[one.cooperation * 10 + another.cooperation]
         one.life += test_result[0]
@@ -84,17 +103,18 @@ def get_random_tactics(proportion):
 if __name__ == '__main__':
     sum_prisoner = 100
     test_count = 100
-    proportion = [1, 100]
+    proportion = [50, 100]
     prisoner_list = []
     dead_list = []
     for i in range(sum_prisoner):
         prisoner_list.append(Prisoner(i, get_random_tactics(proportion)))
     for i in range(test_count):
         prisoner_list = start(prisoner_list)
-        print i
-        for p in prisoner_list:
-            print p
 
+        print i
+        #for p in prisoner_list:
+        #    print p
+#
         silence_count  = len(filter(lambda x: x.tactics == 0, prisoner_list))
         betray_count   = len(filter(lambda x: x.tactics == 1, prisoner_list))
         flexible_count = len(filter(lambda x: x.tactics == 2, prisoner_list))
@@ -104,5 +124,5 @@ if __name__ == '__main__':
         print "betray count:",   betray_count
         print "flexible count:", flexible_count
         print "revenge count:",  revenge_count
-        if betray_count == 0:
-            break
+        #if betray_count == 0:
+        #   break
