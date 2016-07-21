@@ -102,7 +102,7 @@ def get_random_tactics(proportion):
     return i
 
 if __name__ == '__main__':
-    TEST = True
+    TEST = False
     def test_random():
         for i in range(100):
             #print get_random_tactics([50, 100])
@@ -111,6 +111,7 @@ if __name__ == '__main__':
     if TEST:
         test_random()
         exit()
+
     sum_prisoner = 10000
     test_count = 10000
     proportion = [33, 66, 100]
