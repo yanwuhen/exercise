@@ -24,7 +24,7 @@ class Prisoner(object):
         self.index = index
         self.tactics = tactics
         self.life = life
-        self.history = [1, 1, 1]
+        self.history = [0, 1, 0]
         self.betray_list = []
         if tactics in (0, 1):
             self.cooperation = tactics
@@ -50,7 +50,7 @@ class Prisoner(object):
             #print another
             #print "end:", self.index,self.history
         elif self.tactics == 3:
-            new_cooperation = 1 if another in self.betray_list else 0
+            new_cooperation = 1 if another.index in self.betray_list else 0
         else:
             new_cooperation = self.tactics
         return new_cooperation
@@ -63,6 +63,11 @@ class Prisoner(object):
         another_new_coop = another.get_new_cooperation(one)
         one.cooperation = one_new_coop
         another.cooperation = another_new_coop
+
+        if another.cooperation == 1 and one.tactics == 3:
+            one.betray_list.append(another.index)
+        if one.cooperation == 1 and another.tactics == 3:
+            another.betray_list.append(one.index)
         # 0:silence 1:betray
         table = {00: (8, 8),
                  01: (-10,  10),
@@ -112,9 +117,9 @@ if __name__ == '__main__':
         test_random()
         exit()
 
-    sum_prisoner = 10000
-    test_count = 10000
-    proportion = [33, 66, 100]
+    sum_prisoner = 100
+    test_count = 100
+    proportion = [1, 50, 51, 100]
     prisoner_list = []
     dead_list = []
     for i in range(sum_prisoner):
@@ -130,10 +135,14 @@ if __name__ == '__main__':
         betray_count   = len(filter(lambda x: x.tactics == 1, prisoner_list))
         flexible_count = len(filter(lambda x: x.tactics == 2, prisoner_list))
         revenge_count  = len(filter(lambda x: x.tactics == 3, prisoner_list))
+        sum_silence_count  = len(filter(lambda x: x.cooperation == 0, prisoner_list))
+        sum_betray_count   = len(filter(lambda x: x.cooperation == 1, prisoner_list))
         print "sum:"
         print "silence count:",  silence_count
         print "betray count:",   betray_count
         print "flexible count:", flexible_count
         print "revenge count:",  revenge_count
+        print "sum silence count:",  sum_silence_count
+        print "sum betray count:",   sum_betray_count
         #if betray_count == 0:
         #   break
