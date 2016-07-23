@@ -20,7 +20,7 @@ def print_prisoner(fun):
 
 class Prisoner(object):
 
-    def __init__(self, index, tactics, life=100):
+    def __init__(self, index, tactics, life=1000):
         self.index = index
         self.tactics = tactics
         self.life = life
@@ -106,6 +106,7 @@ def get_random_tactics(proportion):
         return i
     return i
 
+
 if __name__ == '__main__':
     TEST = False
     def test_random():
@@ -117,9 +118,9 @@ if __name__ == '__main__':
         test_random()
         exit()
 
-    sum_prisoner = 100
-    test_count = 100
-    proportion = [1, 50, 51, 100]
+    sum_prisoner = 250
+    test_count = 3000
+    proportion = [25, 50, 75, 100]
     prisoner_list = []
     dead_list = []
     for i in range(sum_prisoner):
