@@ -22,8 +22,6 @@ class sudoku:
             for i in range(len(list)):
                 if list[i] not in num9_list and type(list[i]) != type([]):
                     list[i] = num9_list
-        #print self.data
-        #print('init_end')
 
     def hang_reduce_possible(self, data):
         for hang in data:
@@ -47,7 +45,6 @@ class sudoku:
 
 
     def small_reduce_possible(self, data):
-        #print data
         all_num = set([])
         sum_list = []
         for x in range(3):
@@ -71,38 +68,24 @@ class sudoku:
 
     # 排除不可能的标签，如果本轮有减掉标签，返回True，否则返回False
     def reduce_possible(self):
-        #print self.data
-        #self.print_data(self.data)
         self.changed = False
         # 横
-        #print('start reduce')
         self.hang_reduce_possible(self.data)
-        #print('横删减：')
-        #self.print_data(self.data)
         # 竖
         new_data = [list(i) for i in zip(*self.data)]
         self.hang_reduce_possible(new_data)
         self.data = [list(i) for i in zip(*new_data)]
-        #print('竖删减：')
-        #self.print_data(self.data)
 
         # 小格
         new_data = [[[] for x in range(3)] for y in range(3)]
         for x in range(0, 3):
             for y in range(0, 3):
-                #print new_data[x][y]
                 new_data[x][y] = [self.data[i][y * 3:y * 3 + 3] for i in range(x * 3, x * 3 + 3)]
-                #print new_data[x][y]
                 self.small_reduce_possible(new_data[x][y])
         for i in range(9):
             x = i / 3
             z = i % 3
             self.data[i] = new_data[x][0][z] + new_data[x][1][z] + new_data[x][2][z]
-        #print('小格删减：')
-        #self.print_data(self.data)
-        #print self.data
-
-        #print('end reduce')
         return self.changed
 
     def guest(self):
