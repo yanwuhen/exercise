@@ -1,0 +1,24 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+bind	../test_wx.py	/^def bind(message, session):$/;"	kind:function	line:53
+client	../test_wx.py	/^client = robot.client$/;"	kind:variable	line:13
+cursor	../db.py	/^cursor = sqldb.cursor()$/;"	kind:variable	line:4
+db.py	../db.py	1;"	kind:file	line:1
+db_excute	../db.py	/^def db_excute():$/;"	kind:function	line:6
+echo	../test_wx.py	/^def echo(message):$/;"	kind:function	line:48
+gen_qr	../test_wx.py	/^def gen_qr(message, session):$/;"	kind:function	line:65
+init_db	../db.py	/^def init_db():$/;"	kind:function	line:9
+json	../test_wx.py	/^import json$/;"	kind:namespace	line:4
+new_user	../test_wx.py	/^def new_user(event, session):$/;"	kind:function	line:80
+os	../test_wx.py	/^import os$/;"	kind:namespace	line:3
+redeem	../test_wx.py	/^def redeem(message):$/;"	kind:function	line:61
+robot	../test_wx.py	/^robot = werobot.WeRoBot(token='Lucy2017')$/;"	kind:variable	line:7
+score_search	../test_wx.py	/^def score_search(message):$/;"	kind:function	line:57
+sqldb	../db.py	/^sqldb = sqlite3.connect('wx.db', heck_same_thread=False, timeout=3)$/;"	kind:variable	line:3
+sqlite3	../db.py	/^import sqlite3$/;"	kind:namespace	line:1
+test_wx.py	../test_wx.py	1;"	kind:file	line:1
+werobot	../test_wx.py	/^import werobot$/;"	kind:namespace	line:5

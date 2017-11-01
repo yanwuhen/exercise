@@ -1,0 +1,119 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+A	../test.py	/^class A(object):$/;"	kind:class	line:1
+B	../test.py	/^class B(object):$/;"	kind:class	line:9
+C	../test.py	/^class C(A, B):$/;"	kind:class	line:17
+Image	../ocr/test.py	/^    from PIL import Image$/;"	kind:namespace	line:14
+MyThread	../thread/threading1.py	/^class MyThread(threading.Thread):$/;"	kind:class	line:6
+Prisoner	../prisoner_dilemma/prisoner_dilemma.py	/^class Prisoner(object):$/;"	kind:class	line:21
+TEST	../prisoner_dilemma/prisoner_dilemma.py	/^    TEST = False$/;"	kind:variable	line:111
+__author__	../ocr/test.py	/^__author__ = 'syq'$/;"	kind:variable	line:2
+__init__	../prisoner_dilemma/prisoner_dilemma.py	/^    def __init__(self, index, tactics, life=1000):$/;"	kind:member	line:23
+__init__	../sudoku/sudoku.py	/^    def __init__(self, lists):$/;"	kind:member	line:13
+__init__	../test.py	/^    def __init__(self, **kwargs):$/;"	kind:member	line:10
+__init__	../test.py	/^    def __init__(self, **kwargs):$/;"	kind:member	line:18
+__init__	../test.py	/^    def __init__(self, **kwargs):$/;"	kind:member	line:2
+__init__	../thread/threading1.py	/^    def __init__(self, threadID, name):$/;"	kind:member	line:7
+__str__	../prisoner_dilemma/prisoner_dilemma.py	/^    def __str__(self):$/;"	kind:member	line:34
+_data	../sudoku/sudoku.py	/^    _data = [$/;"	kind:variable	line:149
+bind	../wx_dev/test_wx.py	/^def bind(message, session):$/;"	kind:function	line:53
+c	../test.py	/^    c = C()$/;"	kind:variable	line:26
+cf	../ini/ini_r.py	/^cf = configparser.ConfigParser()$/;"	kind:variable	line:4
+cf_w	../ini/ini_w.py	/^cf_w = configparser.ConfigParser()$/;"	kind:variable	line:3
+client	../wx_dev/test_wx.py	/^client = robot.client$/;"	kind:variable	line:13
+configparser	../ini/ini_r.py	/^import configparser$/;"	kind:namespace	line:3
+configparser	../ini/ini_w.py	/^import configparser$/;"	kind:namespace	line:2
+copy	../sudoku/sudoku.py	/^import copy$/;"	kind:namespace	line:2
+ctypes	../thread_id/thread_id.py	/^import ctypes$/;"	kind:namespace	line:2
+cursor	../wx_dev/db.py	/^cursor = sqldb.cursor()$/;"	kind:variable	line:4
+db.py	../wx_dev/db.py	1;"	kind:file	line:1
+db_excute	../wx_dev/db.py	/^def db_excute():$/;"	kind:function	line:6
+dead_list	../prisoner_dilemma/prisoner_dilemma.py	/^    dead_list = []$/;"	kind:variable	line:125
+echo	../wx_dev/test_wx.py	/^def echo(message):$/;"	kind:function	line:48
+fileConfig	../logging/logging_file_cfg.py	/^from logging.config import fileConfig$/;"	kind:namespace	line:2
+formatter	../logging/logging_src_cfg.py	/^formatter = logging.Formatter($/;"	kind:variable	line:6
+gen_qr	../wx_dev/test_wx.py	/^def gen_qr(message, session):$/;"	kind:function	line:65
+get_new_cooperation	../prisoner_dilemma/prisoner_dilemma.py	/^    def get_new_cooperation(self, another):$/;"	kind:member	line:42
+get_random_tactics	../prisoner_dilemma/prisoner_dilemma.py	/^def get_random_tactics(proportion):$/;"	kind:function	line:101
+guest	../sudoku/sudoku.py	/^    def guest(self):$/;"	kind:member	line:91
+handler	../logging/logging_src_cfg.py	/^handler = logging.StreamHandler()$/;"	kind:variable	line:5
+hang_reduce_possible	../sudoku/sudoku.py	/^    def hang_reduce_possible(self, data):$/;"	kind:member	line:26
+i	../thread/thread1.py	/^i = 0$/;"	kind:variable	line:2
+ini_r.py	../ini/ini_r.py	1;"	kind:file	line:1
+ini_w.py	../ini/ini_w.py	1;"	kind:file	line:1
+init_data	../sudoku/sudoku.py	/^    def init_data(self):$/;"	kind:member	line:20
+init_db	../wx_dev/db.py	/^def init_db():$/;"	kind:function	line:9
+is_alive	../prisoner_dilemma/prisoner_dilemma.py	/^    def is_alive(self):$/;"	kind:member	line:83
+is_betray	../prisoner_dilemma/prisoner_dilemma.py	/^    def is_betray(self):$/;"	kind:member	line:89
+is_dead	../prisoner_dilemma/prisoner_dilemma.py	/^    def is_dead(self):$/;"	kind:member	line:80
+is_int	../sudoku/sudoku.py	/^def is_int(num):$/;"	kind:function	line:8
+is_silence	../prisoner_dilemma/prisoner_dilemma.py	/^    def is_silence(self):$/;"	kind:member	line:86
+is_soloved	../sudoku/sudoku.py	/^    def is_soloved(self):$/;"	kind:member	line:117
+json	../wx_dev/test_wx.py	/^import json$/;"	kind:namespace	line:4
+json	../z7z8/request_01.py	/^import json$/;"	kind:namespace	line:2
+k8m.py	../web_crawler/k8m.py	1;"	kind:file	line:1
+logger	../logging/logging_file_cfg.py	/^logger = logging.getLogger()$/;"	kind:variable	line:5
+logger	../logging/logging_src_cfg.py	/^logger = logging.getLogger()$/;"	kind:variable	line:4
+logging	../logging/logging_file_cfg.py	/^import logging$/;"	kind:namespace	line:1
+logging	../logging/logging_src_cfg.py	/^import logging$/;"	kind:namespace	line:1
+logging_file_cfg.py	../logging/logging_file_cfg.py	1;"	kind:file	line:1
+logging_src_cfg.py	../logging/logging_src_cfg.py	1;"	kind:file	line:1
+mylock	../thread/threading1.py	/^mylock = threading.RLock()$/;"	kind:variable	line:2
+new_user	../wx_dev/test_wx.py	/^def new_user(event, session):$/;"	kind:function	line:80
+num	../thread/threading1.py	/^num = 0$/;"	kind:variable	line:3
+num9_list	../sudoku/sudoku.py	/^num9_list = [1, 2, 3, 4, 5, 6, 7, 8, 9]$/;"	kind:variable	line:4
+num9_set	../sudoku/sudoku.py	/^num9_set = set(num9_list)$/;"	kind:variable	line:5
+os	../ocr/test.py	/^import os$/;"	kind:namespace	line:10
+os	../wx_dev/test_wx.py	/^import os$/;"	kind:namespace	line:3
+payload	../z7z8/request_01.py	/^payload = {'k1': 'v1', 'k2': 'v2'}$/;"	kind:variable	line:3
+print_data	../sudoku/sudoku.py	/^    def print_data(data):$/;"	kind:member	line:130
+print_prisoner	../prisoner_dilemma/prisoner_dilemma.py	/^def print_prisoner(fun):$/;"	kind:function	line:11
+print_specific	../prisoner_dilemma/prisoner_dilemma.py	/^def print_specific(one, two, type):$/;"	kind:function	line:5
+prisoner_dilemma.py	../prisoner_dilemma/prisoner_dilemma.py	1;"	kind:file	line:1
+prisoner_list	../prisoner_dilemma/prisoner_dilemma.py	/^    prisoner_list = []$/;"	kind:variable	line:124
+proportion	../prisoner_dilemma/prisoner_dilemma.py	/^    proportion = [25, 50, 75, 100]$/;"	kind:variable	line:123
+pyocr	../ocr/test.py	/^    from pyocr import pyocr$/;"	kind:namespace	line:13
+r	../z7z8/request_01.py	/^r = requests.post('http:\/\/httpbin.org\/post', data=json.dumps(payload))$/;"	kind:variable	line:6
+r	../z7z8/request_01.py	/^r = requests.post('http:\/\/httpbin.org\/post', data=payload)$/;"	kind:variable	line:4
+random	../prisoner_dilemma/prisoner_dilemma.py	/^import random$/;"	kind:namespace	line:1
+redeem	../wx_dev/test_wx.py	/^def redeem(message):$/;"	kind:function	line:61
+reduce_possible	../sudoku/sudoku.py	/^    def reduce_possible(self):$/;"	kind:member	line:70
+request_01.py	../z7z8/request_01.py	1;"	kind:file	line:1
+requests	../z7z8/request_01.py	/^import requests$/;"	kind:namespace	line:1
+robot	../wx_dev/test_wx.py	/^robot = werobot.WeRoBot(token='Lucy2017')$/;"	kind:variable	line:7
+run	../thread/threading1.py	/^    def run(self):$/;"	kind:member	line:12
+s	../sudoku/sudoku.py	/^    s = sudoku(_data)$/;"	kind:variable	line:171
+score_search	../wx_dev/test_wx.py	/^def score_search(message):$/;"	kind:function	line:57
+small_reduce_possible	../sudoku/sudoku.py	/^    def small_reduce_possible(self, data):$/;"	kind:member	line:47
+solove	../sudoku/sudoku.py	/^    def solove(self):$/;"	kind:member	line:101
+sqldb	../wx_dev/db.py	/^sqldb = sqlite3.connect('wx.db', heck_same_thread=False, timeout=3)$/;"	kind:variable	line:3
+sqlite3	../wx_dev/db.py	/^import sqlite3$/;"	kind:namespace	line:1
+start	../prisoner_dilemma/prisoner_dilemma.py	/^def start(test_list):$/;"	kind:function	line:93
+sudoku	../sudoku/sudoku.py	/^class sudoku:$/;"	kind:class	line:12
+sudoku.py	../sudoku/sudoku.py	1;"	kind:file	line:1
+sum_prisoner	../prisoner_dilemma/prisoner_dilemma.py	/^    sum_prisoner = 250$/;"	kind:variable	line:121
+sys	../ocr/test.py	/^import sys$/;"	kind:namespace	line:5
+test	../prisoner_dilemma/prisoner_dilemma.py	/^    def test(one, another):$/;"	kind:member	line:61
+test	../thread/thread1.py	/^def test(t_name):$/;"	kind:function	line:4
+test	../thread/threading1.py	/^def test():$/;"	kind:function	line:24
+test.py	../ocr/test.py	1;"	kind:file	line:1
+test.py	../test.py	1;"	kind:file	line:1
+test_count	../prisoner_dilemma/prisoner_dilemma.py	/^    test_count = 3000$/;"	kind:variable	line:122
+test_random	../prisoner_dilemma/prisoner_dilemma.py	/^    def test_random():$/;"	kind:function	line:112
+test_wx.py	../wx_dev/test_wx.py	1;"	kind:file	line:1
+thread	../logging/logging_src_cfg.py	/^import thread$/;"	kind:namespace	line:2
+thread	../thread/thread1.py	/^import thread$/;"	kind:namespace	line:1
+thread1.py	../thread/thread1.py	1;"	kind:file	line:1
+thread_id.py	../thread_id/thread_id.py	1;"	kind:file	line:1
+threading	../thread/threading1.py	/^import threading$/;"	kind:namespace	line:1
+threading1.py	../thread/threading1.py	1;"	kind:file	line:1
+tid	../thread_id/thread_id.py	/^	tid = ctypes.CDLL('libc.so.6').syscall(id)  #syscall系统调用$/;"	kind:variable	line:4
+tools	../ocr/test.py	/^tools = pyocr.get_available_tools()[:]$/;"	kind:variable	line:20
+werobot	../wx_dev/test_wx.py	/^import werobot$/;"	kind:namespace	line:5
+wrapper	../prisoner_dilemma/prisoner_dilemma.py	/^    def wrapper(one, another):$/;"	kind:function	line:12
+wraps	../prisoner_dilemma/prisoner_dilemma.py	/^from functools import wraps$/;"	kind:namespace	line:2
+x	../sudoku/sudoku.py	/^    x = -1$/;"	kind:variable	line:148
