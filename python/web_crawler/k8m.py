@@ -1,7 +1,12 @@
 import os
-import requests
+import sys
+import csv
 import urllib
+import requests
 from bs4 import BeautifulSoup
+
+def clean_text(txt):
+    return txt
 
 def get_data(keyword):
     q_str = urllib.parse.urlencode({'q': keyword})
@@ -19,12 +24,36 @@ def get_data(keyword):
     cited_num = 0
     for n in cited_node.findAll("a"):
         if 'Cited by' in n.contents[0]:
-            cited_num = n.contents[0]
-    return title, author, cited_num
+            cited_num = n.contents[0][9:]
+    return clean_text(title), clean_text(author), cited_num
 
-def handle(input_file):
+def calc_relate(title, line):
+    t_list = title.strip.split(' ')
+    l_line = line.strip.split(' ')
+    cnt = 0
+    reverse_cnt = 0
+    for t in t_list:
+        if t in l_line:
+            cnt += 1
+    relate = "%02.2f%%" % ((cnt * 100.0) / len(l_line))
+    for l in l_line:
+        if l in t_list:
+            reverse_cnt += 1
+    reverse_relate = "%02.2f%%" % ((reverse_cnt * 100.0) / len(t_list))
+    return relate, reverse_relate
+
+if __name__ == '__main__':
+    if len(sys.argv) != 2:
+        raise Exception('usage: xxx your_input_file')
+    input_file = sys.argv[1]
     if not os.path.exists(input_file):
-        print('error: file no exist.')
+        raise Exception('error: file no exist.')
+    if os.path.exists('output.cvs'):
+        raise Exception('error: output.cvs aleady exist.')
+    else:
+        writer = csv.writer(open('output.cvs', 'w'))
     with open(input_file, 'r') as in_f:
-        for l in in_f.readlines():
-            get_data(l.strip())
+        for line in in_f.readlines():
+            title, author, cited_num = get_data(line.strip())
+            relate, reverse_relate = calc_relate(title, line)
+            writer.writerow([line, title, author, cited_num, relate, reverse_relate])
