@@ -13,7 +13,6 @@ def clean_text(txt):
 
 def get_data(keyword):
     q_str = parse.urlencode({'q': keyword})
-    #参数：hl=zh-CN 指定语言；as_sdt=20051008 日期；
     rsp = requests.get(url='https://scholar.google.com/scholar?hl=en-US&as_sdt=0%2C5&'+ q_str)
     html_txt = rsp.text
     bs = BeautifulSoup(html_txt, "lxml")
