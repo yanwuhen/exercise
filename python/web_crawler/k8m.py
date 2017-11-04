@@ -1,15 +1,18 @@
 import os
 import sys
 import csv
-import urllib
 import requests
 from bs4 import BeautifulSoup
+if sys.version > '3':
+    import urllib.parse as parse
+else:
+    import urllib as parse
 
 def clean_text(txt):
     return txt
 
 def get_data(keyword):
-    q_str = urllib.parse.urlencode({'q': keyword})
+    q_str = parse.urlencode({'q': keyword})
     #参数：hl=zh-CN 指定语言；as_sdt=20051008 日期；
     rsp = requests.get(url='https://scholar.google.com/scholar?hl=en-US&as_sdt=0%2C5&'+ q_str)
     html_txt = rsp.text
