@@ -8,6 +8,7 @@ if sys.version > '3':
     import urllib.parse as parse
 else:
     import urllib as parse
+#debug=False
 debug=True
 
 def clean_text(contents_list):
@@ -24,8 +25,13 @@ def get_data(keyword):
     rsp = requests.get(url='https://scholar.google.com/scholar?hl=en-US&as_sdt=0%2C5&'+ q_str)
     html_txt = rsp.text
     if debug:
-        with open(keyword+'.html', 'w') as tmp_f:
-            tmp_f.write(html_txt.encode('utf-8'))	
+        k_file = keyword[:50].replace('\\','').replace("'", '') + '.html'
+        with open(k_file, 'w', encoding='utf-8') as tmp_f:
+            if sys.version > '3':
+                f_txt = html_txt
+            else:
+                f_txt = html_txt.encode('utf-8')
+            tmp_f.write(f_txt)	
     bs = BeautifulSoup(html_txt, "lxml")
     gs_ri = bs.find('div', class_='gs_ri')
     gs_rt = gs_ri.find("h3", class_='gs_rt')
@@ -63,14 +69,16 @@ if __name__ == '__main__':
     output_file = 'output.csv'
     if not os.path.exists(input_file):
         raise Exception('error: file no exist.')
-    if os.path.exists(output_file) and not debug:
-        raise Exception('error: output.cvs aleady exist.')
+    #if os.path.exists(output_file) and not debug:
+    #    raise Exception('error: output.csv aleady exist.')
     else:
-        writer = csv.writer(open(output_file, 'w'))
+        writer = csv.writer(open(output_file, 'w', encoding='utf-8'))
         writer.writerow(['line', 'title', 'author', 'cited_num', 'relate', 'reverse_relate'])
-    with open(input_file, 'r') as in_f:
+    with open(input_file, 'r', encoding='utf-8') as in_f:
         for line in in_f.readlines():
             line = line.strip()
+            if line is None or line == '':
+                continue
             title, author, cited_num = get_data(line)
             relate, reverse_relate = calc_relate(title, line)
             writer.writerow([line, title, author, cited_num, relate, reverse_relate])
