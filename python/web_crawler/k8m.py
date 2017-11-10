@@ -1,6 +1,7 @@
 import os
 import sys
 import csv
+import copy
 import requests
 from bs4 import BeautifulSoup
 import bs4
@@ -66,19 +67,25 @@ if __name__ == '__main__':
     if len(sys.argv) != 2:
         raise Exception('usage: xxx your_input_file')
     input_file = sys.argv[1]
-    output_file = 'output.csv'
     if not os.path.exists(input_file):
         raise Exception('error: file no exist.')
-    #if os.path.exists(output_file) and not debug:
-    #    raise Exception('error: output.csv aleady exist.')
+    output_file = 'output.csv'
+    if os.path.exists(output_file):
+        writer = csv.writer(open(output_file, 'a', encoding='utf-8'))
     else:
         writer = csv.writer(open(output_file, 'w', encoding='utf-8'))
         writer.writerow(['line', 'title', 'author', 'cited_num', 'relate', 'reverse_relate'])
+
     with open(input_file, 'r', encoding='utf-8') as in_f:
-        for line in in_f.readlines():
-            line = line.strip()
-            if line is None or line == '':
-                continue
-            title, author, cited_num = get_data(line)
-            relate, reverse_relate = calc_relate(title, line)
-            writer.writerow([line, title, author, cited_num, relate, reverse_relate])
+        all_keyword = in_f.readlines()
+        copy_keywork = copy.deepcopy(all_keyword)
+    for line in all_keyword:
+        copy_keywork.remove(line)
+        line = line.strip()
+        if line is None or line == '':
+            continue
+        title, author, cited_num = get_data(line)
+        relate, reverse_relate = calc_relate(title, line)
+        writer.writerow([line, title, author, cited_num, relate, reverse_relate])
+        with open(input_file, 'w', encoding='utf-8') as unh_f:
+            unh_f.writelines(copy_keywork)
