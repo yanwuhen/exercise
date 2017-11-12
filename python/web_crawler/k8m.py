@@ -15,7 +15,7 @@ debug=False
 def clean_text(contents_list):
     ret = []
     for node in contents_list:
-        if type(node) == bs4.element.NavigableString:
+        if type(node) in (str, bs4.element.NavigableString):
             ret.append(node)
         else:
             ret.append(clean_text(node))
@@ -25,18 +25,29 @@ def get_data(keyword):
     q_str = parse.urlencode({'q': keyword})
     rsp = requests.get(url='https://scholar.google.com/scholar?hl=en-US&as_sdt=0%2C5&'+ q_str)
     html_txt = rsp.text
+    if 'did not match any articles' in html_txt:
+        return 'did_not_match_any', None, None
     if debug:
-        k_file = keyword[:50].replace('\\','').replace("'", '') + '.html'
+        #k_file = keyword[:50].replace('\\','').replace("'", '').replace("/", "") + '.html'
+        k_file = 'test.html'
         with open(k_file, 'w', encoding='utf-8') as tmp_f:
             if sys.version > '3':
                 f_txt = html_txt
             else:
                 f_txt = html_txt.encode('utf-8')
             tmp_f.write(f_txt)	
+    if 'not a robot' in html_txt:
+        raise Exception('robot detection')
+        print('robot detection')
+
     bs = BeautifulSoup(html_txt, "lxml")
     gs_ri = bs.find('div', class_='gs_ri')
     gs_rt = gs_ri.find("h3", class_='gs_rt')
-    title = gs_rt.find('a').contents
+    title = gs_rt.find('a')
+    if title:
+        title = title.contents
+    else:
+        title = gs_rt.text
     gs_a = gs_ri.find("div", class_="gs_a")
     author_nodes = gs_a.findAll("a")
     author = [clean_text(a.contents) for a in author_nodes]
@@ -79,13 +90,19 @@ if __name__ == '__main__':
     with open(input_file, 'r', encoding='utf-8') as in_f:
         all_keyword = in_f.readlines()
         copy_keywork = copy.deepcopy(all_keyword)
-    for line in all_keyword:
-        copy_keywork.remove(line)
-        line = line.strip()
-        if line is None or line == '':
-            continue
-        title, author, cited_num = get_data(line)
-        relate, reverse_relate = calc_relate(title, line)
-        writer.writerow([line, title, author, cited_num, relate, reverse_relate])
+    try:
+        for line in all_keyword:
+            copy_keywork.remove(line)
+            line = line.strip()
+            if line is None or line == '':
+                continue
+            title, author, cited_num = get_data(line)
+            if title == 'did_not_match_any' and author is None and cited_num is None:
+                with open('did_not_match_any.txt', 'a') as dnma:
+                    dnma.writelines(line)
+            else:
+                relate, reverse_relate = calc_relate(title, line)
+                writer.writerow([line, title, author, cited_num, relate, reverse_relate])
+    finally:
         with open(input_file, 'w', encoding='utf-8') as unh_f:
             unh_f.writelines(copy_keywork)
