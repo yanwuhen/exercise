@@ -99,7 +99,7 @@ if __name__ == '__main__':
             title, author, cited_num = get_data(line)
             if title == 'did_not_match_any' and author is None and cited_num is None:
                 with open('did_not_match_any.txt', 'a') as dnma:
-                    dnma.writelines(line)
+                    dnma.writelines(line+'\n')
             else:
                 relate, reverse_relate = calc_relate(title, line)
                 writer.writerow([line, title, author, cited_num, relate, reverse_relate])
