@@ -100,26 +100,28 @@ if __name__ == '__main__':
     with open(input_file, 'r', encoding='utf-8') as in_f:
         all_keyword = in_f.readlines()
         copy_keywork = copy.deepcopy(all_keyword)
-    for line in all_keyword:
-        copy_keywork.remove(line)
-        line = line.strip()
+    for line_org in all_keyword:
+        line = line_org.strip()
         if line is None or line == '':
             continue
         try:
             title, author, cited_num = get_data(line)
         except Exception as e:
             if debug:
-                print(e)
-            with open('fail.txt', 'a') as fail_f:
+                import traceback
+                print(line)
+                print(traceback.format_exc())
+            with open('fail.txt', 'a', encoding='utf-8') as fail_f:
                 fail_f.writelines(line + '\n')
         if title == 'not_a_robot' and author is None and cited_num is None:
              print('robot detection')
              raise
         if title == 'did_not_match_any' and author is None and cited_num is None:
-            with open('did_not_match_any.txt', 'a') as dnma:
+            with open('did_not_match_any.txt', 'a', encoding='utf-8') as dnma:
                 dnma.writelines(line+'\n')
         else:
             relate, reverse_relate = calc_relate(title, line)
             writer.writerow([line, title, author, cited_num, relate, reverse_relate])
-        with open(input_file, 'w', encoding='utf-8') as unh_f:
+        with open(input_file, 'w', encoding='utf-8', encoding='utf-8') as unh_f:
+            copy_keywork.remove(line_org)
             unh_f.writelines(copy_keywork)
