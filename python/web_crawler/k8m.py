@@ -40,7 +40,7 @@ def get_data(keyword):
                 f_txt = html_txt
             else:
                 f_txt = html_txt.encode('utf-8')
-            tmp_f.write(f_txt)	
+            tmp_f.write(f_txt)
     if 'not a robot' in html_txt:
         raise Exception('robot detection')
         print('robot detection')
@@ -101,22 +101,22 @@ if __name__ == '__main__':
     with open(input_file, 'r', encoding='utf-8') as in_f:
         all_keyword = in_f.readlines()
         copy_keywork = copy.deepcopy(all_keyword)
-    try:
-        for line in all_keyword:
-            copy_keywork.remove(line)
-            line = line.strip()
-            if line is None or line == '':
-                continue
+    for line in all_keyword:
+        copy_keywork.remove(line)
+        line = line.strip()
+        if line is None or line == '':
+            continue
+        try:
             title, author, cited_num = get_data(line)
-            if title == 'did_not_match_any' and author is None and cited_num is None:
-                with open('did_not_match_any.txt', 'a') as dnma:
-                    dnma.writelines(line+'\n')
-            else:
-                relate, reverse_relate = calc_relate(title, line)
-                writer.writerow([line, title, author, cited_num, relate, reverse_relate])
-    except Exception as e:
-        with open('fail.txt', 'w') as fail_f:
-            fail_f.writelines(line + '\n')
+        except Exception as e:
+            with open('fail.txt', 'a') as fail_f:
+                fail_f.writelines(line + '\n')
+        if title == 'did_not_match_any' and author is None and cited_num is None:
+            with open('did_not_match_any.txt', 'a') as dnma:
+                dnma.writelines(line+'\n')
+        else:
+            relate, reverse_relate = calc_relate(title, line)
+            writer.writerow([line, title, author, cited_num, relate, reverse_relate])
     finally:
         with open(input_file, 'w', encoding='utf-8') as unh_f:
             unh_f.writelines(copy_keywork)
