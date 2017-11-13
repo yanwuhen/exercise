@@ -9,8 +9,8 @@ if sys.version > '3':
     import urllib.parse as parse
 else:
     import urllib as parse
-debug=False
-#debug=True
+#debug=False
+debug=True
 
 def clean_text(contents_list):
     try:
