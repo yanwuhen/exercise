@@ -7,12 +7,12 @@ cursor = conn.cursor()
 unh = []
 with open('input.txt', 'r') as f:
 	for l in f.readlines():
-		l = l.strip()
-		cursor.execute('select line,title,author,cited_num,relate,reverse_relate from k8m where line=?', [l])
+		l_clear = l.strip()
+		cursor.execute('select line,title,author,cited_num,relate,reverse_relate from k8m where line=?', [l_clear])
 		ret = cursor.fetchall()
 		if len(ret) >= 1:
 			continue
 		unh.append(l)
 
-with open('unh.txt', 'r') as of:
+with open('unh.txt', 'w') as of:
 	of.writelines(unh)

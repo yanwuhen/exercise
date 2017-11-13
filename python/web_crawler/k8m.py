@@ -13,13 +13,18 @@ debug=False
 #debug=True
 
 def clean_text(contents_list):
-    ret = []
-    for node in contents_list:
-        if type(node) in (str, bs4.element.NavigableString):
-            ret.append(node)
-        else:
-            ret.append(clean_text(node))
-    return ''.join(ret)
+    try:
+        if type(contents_list) in (str, bs4.element.NavigableString):
+            return contents
+        ret = []
+        for node in contents_list:
+            if type(node) in (str, bs4.element.NavigableString):
+                ret.append(node)
+            else:
+                ret.append(clean_text(node))
+        return ''.join(ret)
+    except Exception as e:
+        return str(contents_list)
 
 def get_data(keyword):
     q_str = parse.urlencode({'q': keyword})
@@ -48,16 +53,22 @@ def get_data(keyword):
         title = title.contents
     else:
         title = gs_rt.text
+    title = clean_text(title)
+
     gs_a = gs_ri.find("div", class_="gs_a")
     author_nodes = gs_a.findAll("a")
-    author = [clean_text(a.contents) for a in author_nodes]
-    author = ' '.join(author)
+    if author_nodes is None:
+        author_nodes = gs_a.text
+    else:
+        author = [clean_text(a.contents) for a in author_nodes]
+        author = ' '.join(author)
+
     cited_node = gs_ri.find("div", class_="gs_fl")
     cited_num = 0
     for n in cited_node.findAll("a"):
         if 'Cited by' in n.contents[0]:
             cited_num = n.contents[0][9:]
-    return clean_text(title), author, cited_num
+    return title, author, cited_num
 
 def calc_relate(title, line):
     t_list = title.strip().split(' ')
@@ -103,6 +114,9 @@ if __name__ == '__main__':
             else:
                 relate, reverse_relate = calc_relate(title, line)
                 writer.writerow([line, title, author, cited_num, relate, reverse_relate])
+    except Exception as e:
+        with open('fail.txt', 'w') as fail_f:
+            fail_f.writelines(line + '\n')
     finally:
         with open(input_file, 'w', encoding='utf-8') as unh_f:
             unh_f.writelines(copy_keywork)
