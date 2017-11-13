@@ -109,6 +109,8 @@ if __name__ == '__main__':
         try:
             title, author, cited_num = get_data(line)
         except Exception as e:
+            if debug:
+                print(e)
             with open('fail.txt', 'a') as fail_f:
                 fail_f.writelines(line + '\n')
         if title == 'did_not_match_any' and author is None and cited_num is None:
@@ -117,6 +119,5 @@ if __name__ == '__main__':
         else:
             relate, reverse_relate = calc_relate(title, line)
             writer.writerow([line, title, author, cited_num, relate, reverse_relate])
-    finally:
         with open(input_file, 'w', encoding='utf-8') as unh_f:
             unh_f.writelines(copy_keywork)
