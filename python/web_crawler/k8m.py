@@ -42,8 +42,7 @@ def get_data(keyword):
                 f_txt = html_txt.encode('utf-8')
             tmp_f.write(f_txt)
     if 'not a robot' in html_txt:
-        raise Exception('robot detection')
-        print('robot detection')
+        return 'not_a_robot', None, None
 
     bs = BeautifulSoup(html_txt, "lxml")
     gs_ri = bs.find('div', class_='gs_ri')
@@ -113,6 +112,9 @@ if __name__ == '__main__':
                 print(e)
             with open('fail.txt', 'a') as fail_f:
                 fail_f.writelines(line + '\n')
+        if title == 'not_a_robot' and author is None and cited_num is None:
+             print('robot detection')
+             raise
         if title == 'did_not_match_any' and author is None and cited_num is None:
             with open('did_not_match_any.txt', 'a') as dnma:
                 dnma.writelines(line+'\n')
