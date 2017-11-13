@@ -9,8 +9,8 @@ if sys.version > '3':
     import urllib.parse as parse
 else:
     import urllib as parse
-#debug=False
-debug=True
+debug=False
+#debug=True
 
 def clean_text(contents_list):
     try:
@@ -113,6 +113,7 @@ if __name__ == '__main__':
                 print(traceback.format_exc())
             with open('fail.txt', 'a', encoding='utf-8') as fail_f:
                 fail_f.writelines(line + '\n')
+            #raise e
         if title == 'not_a_robot' and author is None and cited_num is None:
              print('robot detection')
              raise
@@ -122,6 +123,6 @@ if __name__ == '__main__':
         else:
             relate, reverse_relate = calc_relate(title, line)
             writer.writerow([line, title, author, cited_num, relate, reverse_relate])
-        with open(input_file, 'w', encoding='utf-8', encoding='utf-8') as unh_f:
+        with open(input_file, 'w', encoding='utf-8') as unh_f:
             copy_keywork.remove(line_org)
             unh_f.writelines(copy_keywork)
