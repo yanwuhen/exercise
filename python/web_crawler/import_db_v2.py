@@ -2,7 +2,8 @@ import os
 import csv
 import sqlite3
 
-CREATE_TABLE = 'create table k8m (line VARCHAR(65536),'\
+CREATE_TABLE = 'CREATE TABLE IF NOT EXISTS k8m (id INTEGER,'\
+                              ' line VARCHAR(65536),'\
 							  ' title VARCHAR(65536),'\
 							  ' author VARCHAR(1024),'\
 							  ' cited_num VARCHAR(128),'\
@@ -33,10 +34,14 @@ def update_file(input_file='input.txt', title=''):
 			conn.commit()
 
 def import_file(input_file='input.txt', title=''):
+	id = 0
 	with open(input_file, 'r', encoding='utf-8') as in_f:
 		for ln in in_f.readlines():
+			id += 1
 			ln = ln.strip()
-			cursor.execute('insert into k8m(line,title,author,cited_num,relate,reverse_relate) values(?,?,?,?,?,?)', [ln, title, '', '', '', ''])
+			if ln is None or ln == '':
+				continue
+			cursor.execute('insert into k8m(id, line,title,author,cited_num,relate,reverse_relate) values(?,?,?,?,?,?)', [id, ln, title, '', '', '', ''])
 			conn.commit()
 
 import_file()
