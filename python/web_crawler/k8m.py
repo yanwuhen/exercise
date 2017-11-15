@@ -60,7 +60,7 @@ def get_data(keyword):
         author_nodes = gs_a.text
     else:
         author = [clean_text(a.contents) for a in author_nodes]
-        author = ' '.join(author)
+        author = ','.join(author)
 
     cited_node = gs_ri.find("div", class_="gs_fl")
     cited_num = 0
