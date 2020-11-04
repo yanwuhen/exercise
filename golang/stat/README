@@ -1,0 +1,2 @@
+使用sqlite3 + chan + goroutine, 2并发及以下最快，13s左右
+mysql 并发125以上时会报ErrPktSyncMul

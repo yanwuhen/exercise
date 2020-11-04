@@ -1,0 +1,96 @@
+package main
+
+import (
+	//	"flag"
+	"fmt"
+	"io/ioutil"
+	"log"
+	"os"
+	"sync"
+	"syscall"
+	"time"
+
+	"github.com/jmoiron/sqlx"
+	_ "github.com/mattn/go-sqlite3"
+)
+
+type FileStat struct {
+	Id       int    `db:"id"`
+	Name     string `db:"name"`
+	Size     int64
+	Atime    time.Time
+	Mtime    time.Time
+	Ctime    time.Time
+	Parentid int
+}
+
+var db *sqlx.DB
+
+func main() {
+	/*
+		path := flag.String("n", "", "path")
+		flag.Parse()
+		if path == nil || *path == "" {
+			log.Panicln("pls input filename")
+		}
+	*/
+	var err error
+	db, err = sqlx.Open("sqlite3", "/dev/shm/filestat.db")
+	if err != nil {
+		log.Print()
+	}
+	var wg sync.WaitGroup
+	wg_cnt := 0
+	for i := 1; i <= 137; i++ {
+		dir := fmt.Sprintf("/mnt/Z7Z8/1022/recup_dir.%d", i)
+		rd, err := ioutil.ReadDir(dir)
+		if err != nil {
+			log.Panicln("read dir failed", err)
+		}
+		for _, f := range rd {
+			if f.IsDir() {
+				log.Println(f.Name(), "is dir")
+				continue
+			}
+			filename := fmt.Sprintf("%s/%s", dir, f.Name())
+			go proc(filename, &wg)
+			wg.Add(1)
+			wg_cnt += 1
+			if wg_cnt > 100 {
+				log.Println("wg_cnt=", wg_cnt)
+				wg.Wait()
+				wg_cnt = 0
+			}
+		}
+	}
+	wg.Wait()
+	db.Close()
+}
+
+func proc(filename string, waitGroup *sync.WaitGroup) {
+	defer waitGroup.Done()
+	fileinfo, err := os.Stat(filename)
+	if err != nil {
+		log.Panicln("stat failed", err)
+	}
+	mtime := fileinfo.ModTime()
+	stat := fileinfo.Sys().(*syscall.Stat_t)
+	atime := time.Unix(int64(stat.Atim.Sec), int64(stat.Atim.Nsec))
+	ctime := time.Unix(int64(stat.Ctim.Sec), int64(stat.Ctim.Nsec))
+	_, err = db.Exec("insert into allfile(`name`,`size`,atime,mtime,ctime) values(?, ?, ?, ?, ?)", filename, fileinfo.Size(), atime, mtime, ctime)
+	if err != nil {
+		log.Panicln("insert fail", err)
+	}
+}
+
+/*
+	arr := []Customer{}
+	err = db.Select(&arr, "SELECT id,name,order_id FROM person")
+	if err != nil {
+		log.Print("query failed", err)
+	}
+	//log.Printf("%v", arr)
+
+	buf, err := json.MarshalIndent(arr, "", "\t")
+	log.Printf("\n%s", buf)
+*/

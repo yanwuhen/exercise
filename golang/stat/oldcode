@@ -1,0 +1,68 @@
+package main
+
+import (
+	"flag"
+	"log"
+	"os"
+	"syscall"
+	"time"
+	"github.com/jmoiron/sqlx"
+	_ "github.com/mattn/go-sqlite3"
+)
+
+type FileStat struct {
+	Id       int    `db:"id"`
+	Name     string `db:"name"`
+	Size     int64
+	Atime    time.Time
+	Mtime    time.Time
+	Ctime    time.Time
+	Parentid int
+}
+
+func main() {
+	filename := flag.String("n", "", "filename")
+	pid := flag.Int("p", 0, "parentid")
+	flag.Parse()
+	if filename == nil || *filename==""{
+		log.Panicln("pls input filename")
+	}
+	if pid ==nil || *pid == 0 {
+		log.Panicln("pls input pid")
+	}
+	fileinfo, err := os.Stat(*filename)
+	if err != nil {
+		log.Panicln("stat failed", err)
+	}
+	mtime := fileinfo.ModTime()
+	stat := fileinfo.Sys().(*syscall.Stat_t)
+	atime := time.Unix(int64(stat.Atim.Sec), int64(stat.Atim.Nsec))
+	ctime := time.Unix(int64(stat.Ctim.Sec), int64(stat.Ctim.Nsec))
+	f := FileStat{
+		Name:  *filename,
+		Size:  fileinfo.Size(),
+		Atime: atime,
+		Mtime: mtime,
+		Ctime: ctime,
+	}
+	db, err := sqlx.Open("sqlite3", "/mnt/filestat.db")
+	_ = db
+	if err != nil {
+		log.Print()
+	}
+	_, err = db.Exec("insert into allfile(`name`,`size`,atime,mtime,ctime) values(?, ?, ?, ?, ?)", f.Name, f.Size, f.Atime, f.Mtime, f.Ctime)
+	if err != nil {
+		log.Panicln("insert fail", err)
+	}
+	/*
+		arr := []Customer{}
+		err = db.Select(&arr, "SELECT id,name,order_id FROM person")
+		if err != nil {
+			log.Print("query failed", err)
+		}
+		//log.Printf("%v", arr)
+
+		buf, err := json.MarshalIndent(arr, "", "\t")
+		log.Printf("\n%s", buf)
+	*/
+}
